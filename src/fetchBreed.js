@@ -1,0 +1,1 @@
+const fetchBreed = async({ queryKey });
