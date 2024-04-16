@@ -34,3 +34,11 @@ export const Details = () => {
     </div>
   );
 };
+
+export default function DetailsErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
