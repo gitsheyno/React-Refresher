@@ -15,3 +15,5 @@ const fetchBreed = async ({ queryKey }) => {
 
   return apiRes.json();
 };
+
+export default fetchBreed;
