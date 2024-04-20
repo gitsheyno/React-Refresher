@@ -3,7 +3,7 @@ import SearchParams from "./SearchParams";
 import Details from "./Details";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import AdoptedPetContext from "./AdoptPetContext";
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,21 +16,30 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const adoptedPet = useState(null);
-  console.log(adoptedPet);
+
   return (
-    <BrowserRouter>
-      <AdoptedPetContext.Provider value={adoptedPet}>
-        <QueryClientProvider client={queryClient}>
-          <header>
-            <Link to="/">Adopt Me!</Link>
-          </header>
-          <Routes>
-            <Route path="/details/:id" element={<Details />} />
-            <Route path="/" element={<SearchParams />} />
-          </Routes>
-        </QueryClientProvider>
-      </AdoptedPetContext.Provider>
-    </BrowserRouter>
+    <div
+      className="p-0  m-0"
+      style={{
+        background: "url(http://pets-images.dev-apis.com/pets/wallpaperA.jpg)",
+      }}
+    >
+      <BrowserRouter>
+        <AdoptedPetContext.Provider value={adoptedPet}>
+          <QueryClientProvider client={queryClient}>
+            <header className="w-full mb-10  p-7 bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500 text-center">
+              <Link className="text-6xl text-white hover:text-gray-200" to="/">
+                Adopt Me!
+              </Link>
+            </header>
+            <Routes>
+              <Route path="/details/:id" element={<Details />} />
+              <Route path="/" element={<SearchParams />} />
+            </Routes>
+          </QueryClientProvider>
+        </AdoptedPetContext.Provider>
+      </BrowserRouter>
+    </div>
   );
 };
 

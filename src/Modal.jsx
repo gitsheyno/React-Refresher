@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-
+console.log("hello");
 const Modal = ({ children }) => {
   const elRef = useRef(null);
   if (!elRef.current) {

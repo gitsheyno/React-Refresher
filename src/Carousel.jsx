@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 class Carousel extends Component {
   state = {
@@ -19,17 +19,22 @@ class Carousel extends Component {
     const { active } = this.state;
     const { images } = this.props;
     return (
-      <div className="carousel">
-        <img src={images[active]} alt="animal" />
-        <div className="carousel-smaller">
+      <div className="flex flex-col items-center">
+        <img
+          src={images[active]}
+          alt="animal"
+          className="max-w-lg rounded-lg mb-4"
+        />
+        <div className="flex justify-center">
           {images.map((photo, index) => (
-            // eslint-disable-next-line
             <img
               key={photo}
               onClick={this.handleIndexClick}
               data-index={index}
               src={photo}
-              className={index === active ? "active" : ""}
+              className={`w-12 h-12 rounded-full object-cover ${
+                index === active ? "border-4 border-orange-500" : ""
+              }`}
               alt="animal thumbnail"
             />
           ))}
