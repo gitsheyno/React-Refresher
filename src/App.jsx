@@ -1,10 +1,9 @@
 import { createRoot } from "react-dom/client";
-import SearchParams from "./SearchParams";
-import Details from "./Details";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import AdoptedPetContext from "./AdoptPetContext";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -13,6 +12,9 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+const Details = lazy(() => import("./Details"));
+const SearchParams = lazy(() => import("./SearchParams"));
 
 const App = () => {
   const adoptedPet = useState(null);
@@ -27,15 +29,20 @@ const App = () => {
       <BrowserRouter>
         <AdoptedPetContext.Provider value={adoptedPet}>
           <QueryClientProvider client={queryClient}>
-            <header className="w-full mb-10  p-7 bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500 text-center">
-              <Link className="text-6xl text-white hover:text-gray-200" to="/">
-                Adopt Me!
-              </Link>
-            </header>
-            <Routes>
-              <Route path="/details/:id" element={<Details />} />
-              <Route path="/" element={<SearchParams />} />
-            </Routes>
+            <Suspense fallback={<h2>🌀</h2>}>
+              <header className="w-full mb-10  p-7 bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500 text-center">
+                <Link
+                  className="text-6xl text-white hover:text-gray-200"
+                  to="/"
+                >
+                  Adopt Me!
+                </Link>
+              </header>
+              <Routes>
+                <Route path="/details/:id" element={<Details />} />
+                <Route path="/" element={<SearchParams />} />
+              </Routes>
+            </Suspense>
           </QueryClientProvider>
         </AdoptedPetContext.Provider>
       </BrowserRouter>
