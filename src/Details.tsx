@@ -15,7 +15,7 @@ const Details = () => {
   }
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const results = useQuery<PetAPIResponse>(["details", id], fetchPet);
+  const results = useQuery(["details", id], fetchPet);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [adoptedPet, setAdoptedPet] = useContext(AdoptedPetContext);
 
