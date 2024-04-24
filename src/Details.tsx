@@ -6,12 +6,17 @@ import { useContext, useState } from "react";
 import Carousel from "./Carousel";
 import AdoptedPetContext from "./AdoptPetContext";
 import Modal from "./Modal";
+import { PetAPIResponse } from "./APIResponsesTypes";
 
 const Details = () => {
   const { id } = useParams();
+  if (!id) {
+    throw new Error("no id provided to details");
+  }
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const results = useQuery(["details", id], fetchPet);
+  const results = useQuery<PetAPIResponse>(["details", id], fetchPet);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [adoptedPet, setAdoptedPet] = useContext(AdoptedPetContext);
 
   if (results.isLoading) {
@@ -22,7 +27,10 @@ const Details = () => {
     );
   }
 
-  const pet = results.data.pets[0];
+  const pet = results?.data?.pets[0];
+  if (!pet) {
+    throw new Error("pet not found");
+  }
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center bg-gray-100 py-8 px-4 md:px-8">
@@ -74,10 +82,10 @@ const Details = () => {
   );
 };
 
-export default function DetailsErrorBoundary(props) {
+export default function DetailsErrorBoundary() {
   return (
     <ErrorBoundary>
-      <Details {...props} />
+      <Details />
     </ErrorBoundary>
   );
 }
