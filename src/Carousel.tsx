@@ -29,9 +29,11 @@ class Carousel extends Component<IProps> {
     const { active } = this.state;
     const { images } = this.props;
     return (
+      //ToDo : Change the style from tailwind to css
       <div className="flex flex-col items-center">
         <img
           src={images[active]}
+          data-testid="hero"
           alt="animal"
           className="max-w-lg rounded-lg mb-4"
         />
@@ -40,6 +42,7 @@ class Carousel extends Component<IProps> {
             // eslint-disable-next-line
             <img
               key={photo}
+              data-testid={`thumbnail${index}`}
               onClick={this.handleIndexClick}
               data-index={index}
               src={photo}
