@@ -19,10 +19,7 @@ const SearchParams = () => {
   const [breeds] = useBreedList(animal);
 
   const res = useQuery(["search", queryParam], fetchSearch);
-  console.log(res, "res");
   const pets = res?.data?.pets ?? [];
-  console.log(pets, "pet");
-  console.log(queryParam, "queryParam");
   return (
     <div className="my-0 mx-auto w-11/12">
       <form
@@ -35,7 +32,7 @@ const SearchParams = () => {
             location: formData.get("location") ?? "",
             breed: formData.get("breed") ?? "",
           };
-          console.log(objData, "objData");
+
           setQueryParam(objData);
         }}
       >
