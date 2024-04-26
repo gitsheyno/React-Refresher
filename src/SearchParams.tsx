@@ -4,19 +4,20 @@ import { useQuery } from "@tanstack/react-query";
 import Results from "./Results";
 import fetchSearch from "./fetchSearch";
 import useBreedList from "./useBreedList";
+import { Animal } from "./APIResponsesTypes";
 
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams = () => {
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [queryParam, setQueryParam] = useState({
-    animal: "",
+    animal: "" as Animal,
     location: "",
     breed: "",
   });
   const [adoptedPet] = useContext(AdoptedPetContext);
 
-  const [breeds] = useBreedList(animal);
+  const [breeds] = useBreedList(animal as Animal);
 
   const res = useQuery(["search", queryParam], fetchSearch);
   const pets = res?.data?.pets ?? [];
@@ -26,11 +27,12 @@ const SearchParams = () => {
         className="p-10 mb-10 rounded-lg bg-gray-200 shadow-lg flex flex-col justify-center items-center"
         onSubmit={(e) => {
           e.preventDefault();
-          const formData = new FormData(e.target);
+          const formData = new FormData(e.currentTarget);
           const objData = {
-            animal: formData.get("animal") ?? "",
-            location: formData.get("location") ?? "",
-            breed: formData.get("breed") ?? "",
+            animal:
+              (formData.get("animal")?.toString() as Animal) ?? ("" as Animal),
+            location: formData.get("location")?.toString() ?? "",
+            breed: formData.get("breed")?.toString() ?? "",
           };
 
           setQueryParam(objData);
@@ -64,10 +66,10 @@ const SearchParams = () => {
             id="animal"
             value={animal}
             onChange={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
             }}
           >
             <option />

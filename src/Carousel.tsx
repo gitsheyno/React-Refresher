@@ -37,6 +37,7 @@ class Carousel extends Component<IProps> {
         />
         <div className="flex justify-center">
           {images.map((photo, index) => (
+            // eslint-disable-next-line
             <img
               key={photo}
               onClick={this.handleIndexClick}
